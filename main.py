@@ -1,7 +1,7 @@
 # Programa diseñado para la empresa de manejo de residuos “TrashCity”
 
 from datetime import datetime
-from punto import PuntoGeografico
+from punto_geografico import PuntoGeografico
 from conductor import Conductor
 from ruta import Ruta
 from asistente import Asistente

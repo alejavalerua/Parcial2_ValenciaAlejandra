@@ -30,6 +30,11 @@ class CentroAcopio:
         self.cantPlastico = carga * 0.4  # Suponiendo que el 40% de la carga total es plástico
         self.cantMetal = carga * 0.1  # Suponiendo que el 10% de la carga total es metal
         self.cantOrganico = carga * 0.2  # Suponiendo que el 20% de la carga total es material orgánico
+
+        # Notificar a los observadores
+        for observador in self.observadores:
+            observador.actualizar(self.nombre, self.cantVidrio, self.cantPapel, self.cantPlastico, self.cantMetal, self.cantOrganico)
+
         return self.cantVidrio, self.cantPapel, self.cantPlastico, self.cantMetal, self.cantOrganico
         
     def toneladasVidrio(self):
@@ -49,29 +54,6 @@ class CentroAcopio:
     
     def agregarObservador(self, observador):
         self.observadores.append(observador)
-
-    def clasificarCarga(self, cantVidrio, cantPapel, cantPlastico, cantMetal, cantOrganico):
-        # Lógica de clasificación de carga aquí
-
-        # Notificar a los observadores
-        for observador in self.observadores:
-            observador.actualizar(self.nombre, cantVidrio, cantPapel, cantPlastico, cantMetal, cantOrganico)
     
-    self.estrategia_clasificacion = estrategia_clasificacion
-
-    def clasificarCarga(self, carga):
-        self.estrategia_clasificacion.clasificar(carga)
-
-class EstrategiaClasificacion:
-    def clasificar(self, carga):
-        raise NotImplementedError("Método clasificar debe ser implementado por las subclases")
-
-class ClasificadorVidrio(EstrategiaClasificacion):
-    def clasificar(self, carga):
-        # Lógica de clasificación de carga de vidrio aquí
-        pass
-
-class ClasificadorPapel(EstrategiaClasificacion):
-    def clasificar(self, carga):
-        # Lógica de clasificación de carga de papel aquí
-        pass
+    def enviarActualizacionCamion(self, camion, cantVidrio, cantPapel, cantPlastico, cantMetal, cantOrganico):
+        camion.notificarObservador(self.nombre, cantVidrio, cantPapel, cantPlastico, cantMetal, cantOrganico)
