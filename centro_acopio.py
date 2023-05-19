@@ -56,3 +56,22 @@ class CentroAcopio:
         # Notificar a los observadores
         for observador in self.observadores:
             observador.actualizar(self.nombre, cantVidrio, cantPapel, cantPlastico, cantMetal, cantOrganico)
+    
+    self.estrategia_clasificacion = estrategia_clasificacion
+
+    def clasificarCarga(self, carga):
+        self.estrategia_clasificacion.clasificar(carga)
+
+class EstrategiaClasificacion:
+    def clasificar(self, carga):
+        raise NotImplementedError("Método clasificar debe ser implementado por las subclases")
+
+class ClasificadorVidrio(EstrategiaClasificacion):
+    def clasificar(self, carga):
+        # Lógica de clasificación de carga de vidrio aquí
+        pass
+
+class ClasificadorPapel(EstrategiaClasificacion):
+    def clasificar(self, carga):
+        # Lógica de clasificación de carga de papel aquí
+        pass
