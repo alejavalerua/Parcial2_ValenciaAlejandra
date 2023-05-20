@@ -1,4 +1,3 @@
-# Parcial2_ValenciaAlejandra
-#### Nombre Completo: Alejandra Valencia Rua
-#### Código estudiantil: 200176308
+# Parcial2
+#### Nombre: Alejandra Valencia
 #### Correo: alejandrarua@uninorte.edu.co
