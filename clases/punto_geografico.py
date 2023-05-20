@@ -4,5 +4,6 @@ class PuntoGeografico:
         self.longitud = longitud
         self.puntos = list
     
+    # Agrega las coordenadas del punto actual a la lista de puntos
     def agregarPuntos(self):
         self.puntos.append([self.latitud, self.longitud])

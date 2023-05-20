@@ -1,0 +1,184 @@
+@startuml
+
+class Ruta {
+  - nombreRuta: str
+  - puntos: []
+  - comandos: []
+
+  + agregarPunto(punto)
+  + eliminarPunto(punto)
+  + agregarComando(comando)
+  + deshacerComandos()
+}
+
+class Comando {
+  + ejecutarComandos()
+}
+
+class ComandoAgregarPunto {
+  - ruta: Ruta
+  - punto: PuntoGeografico
+
+  + ejecutar()
+  + deshacer()
+}
+
+class ComandoEliminarPunto {
+  - ruta: Ruta
+  - punto: PuntoGeografico
+
+  + ejecutar()
+  + deshacer()
+}
+
+
+class PuntoGeografico {
+  - latitud: float
+  - longitud: float
+  - puntos: []
+
+  + agregarPuntos()
+}
+
+
+class Persona {
+  - nombre: str
+  - id: int
+  - turno: Turno
+  - estrategia: Estrategia
+}
+
+class Estrategia {
+  + setEstrategia(estrategia: Estrategia)
+  + ejecutarAccion()
+}
+
+class EstrategiaConductor {
+  + accion()
+}
+
+class EstrategiaAsistente {
+  + accion()
+}
+
+class Conductor {
+  - licenciaConducir: str
+}
+
+class Asistente {
+}
+
+
+class Camion {
+  - modelo: str
+  - placa: str
+  - conductores: []
+  - asistentes: []
+  - estado: EstadoCamion
+  - observador: ObservadorCamion
+
+  + agregarConductor(conductor)
+  + agregarAsistente(asistente)
+  + revisarEstado()
+  + cambiarEstado()
+  + setEstado(estado)
+  + setObservador(observador)
+  + notificarObservador(nombreCentroAcopio, cantVidrio, cantPapel, cantPlastico, cantMetal, cantOrganico)
+}
+
+class EstadoCamion {
+  + revisarEstado()
+  + cambiarEstado(camion)
+}
+
+class CamionLibre {
+}
+
+class CamionOcupado {
+}
+
+class CamionEnMantenimiento {
+}
+
+abstract class Observador << (A, #FF7700) ABC >> {
+  +actualizar(nombreCentroAcopio, cantVidrio, cantPapel, cantPlastico, cantMetal, cantOrganico)
+}
+
+class ObservadorCamion {
+  - camion: Camion
+  + actualizarObservador(nombreCentroAcopio, cantVidrio, cantPapel, cantPlastico, cantMetal, cantOrganico)
+}
+
+
+class Turno {
+  - turno: int
+  - camion: Camion
+  - conductor: Conductor
+  - asistentes: []
+  - ruta: Ruta
+  - fecha: date
+  - horaInicio: time
+  - horaFin: time
+  - registros: []
+  - tiempo: time
+  - cargaTotal: float
+
+  + agregarRegistro()
+  + vidrioRecolectadoDia(turnos, fecha)
+  + papelRecolectadoDia(turnos, fecha)
+  + plasticoRecolectadoDia(turnos, fecha)
+  + metalRecolectadoDia(turnos, fecha)
+  + organicoRecolectadoDia(turnos, fecha)
+
+}
+
+
+class CentroAcopio {
+  - nombre: str
+  - turno: Turno
+  - vidrioRecolectado: float
+  - papelRecolectado: float
+  - plasticoRecolectado: float
+  - metalRecolectado: float
+  - organicoRecolectado: float
+  - observadores: []
+
+  + getInstance(nombre)
+  + clasificarCarga()
+  + toneladasVidrio()
+  + toneladasPapel()
+  + toneladasPlastico()
+  + toneladasMetal()
+  + toneladasOrganico()
+  + agregarObservador(observador)
+  + enviarActualizacionCamion(camion, cantVidrio, cantPapel, cantPlastico, cantMetal, cantOrganico)
+}
+
+Ruta "1" *-- "*" Comando
+Comando <|-- ComandoAgregarPunto
+Comando <|-- ComandoEliminarPunto
+
+Conductor --|> Persona
+EstrategiaConductor --|> Estrategia
+Asistente --|> Persona
+EstrategiaAsistente --|> Estrategia
+Persona *-- Estrategia
+
+Camion "1" *-- "1" EstadoCamion
+EstadoCamion <|-- CamionLibre
+EstadoCamion <|-- CamionOcupado
+EstadoCamion <|-- CamionEnMantenimiento
+Camion "1" *-- "*" Observador
+Observador <|-- ObservadorCamion
+
+
+CentroAcopio "1" --> "*" ObservadorCamion
+
+Ruta "1" o-- "*" PuntoGeografico
+CentroAcopio "1" <--> "1" Turno
+Turno "*" --> "1" Ruta
+Persona "3" --o  "1" Turno
+Persona "3" --o  "1" Camion
+Camion "1" --o "1" Ruta
+
+@enduml

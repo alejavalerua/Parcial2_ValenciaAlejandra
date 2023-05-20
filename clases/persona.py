@@ -1,4 +1,4 @@
-class Persona:
+class Persona:    
     def __init__(self, nombre, id, turno, estrategia):
         self.nombre = nombre
         self.id = id
@@ -6,13 +6,12 @@ class Persona:
         self.estrategia = estrategia
 
 class Estrategia:
-    ''' Establece la estrategia de acción de la persona -->
-        estrategia (EstrategiaConductor o EstrategiaAsistente): Estrategia de acción de la persona.'''
-    def set_estrategia(self, estrategia):
+    # Establece la estrategia de acción de la persona -->
+    def set_estrategia(self, estrategia):  # --> estrategia (EstrategiaConductor o EstrategiaAsistente): Estrategia de acción de la persona.
         Persona.estrategia = estrategia
 
     # Ejecuta la acción de la persona según su estrategia
-    def ejecutar_accion(self):
+    def ejecutarAccion(self):
         Persona.estrategia.accion()
 
 class EstrategiaConductor:

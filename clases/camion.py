@@ -1,3 +1,5 @@
+from abc import ABC, abstractmethod
+
 class Camion:
     def __init__(self, modelo, placa):
         self.modelo = modelo
@@ -72,12 +74,18 @@ class CamionEnMantenimiento(EstadoCamion):
     def cambiarEstado(self, camion):
         camion.setEstado(CamionLibre())
 
+class Observador(ABC):
+    # Método abstracto para actualizar el observador con la información recibida
+    @abstractmethod
+    def actualizar(self, nombreCentroAcopio, cantVidrio, cantPapel, cantPlastico, cantMetal, cantOrganico):
+        pass
+
 class ObservadorCamion:
     def __init__(self, camion):
         self.camion = camion
 
     # Actualiza el observador con la información recibida
-    def actualizar(self, nombreCentroAcopio, cantVidrio, cantPapel, cantPlastico, cantMetal, cantOrganico):
+    def actualizarObservador(self, nombreCentroAcopio, cantVidrio, cantPapel, cantPlastico, cantMetal, cantOrganico):
         # Actualizar los registros del camión con la información recibida
         print(f"El camión ha llegado al centro de acopio {nombreCentroAcopio}.")
         print(f"Se ha recolectado la siguiente cantidad de materiales:")
